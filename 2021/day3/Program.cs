@@ -54,3 +54,5 @@ Console.WriteLine($"Gamma rate in decimal is {gammaRateDecimal}.");
 Console.WriteLine($"Epsilon rate in decimal is {epsilonRateDecimal}.\n");
 Console.WriteLine($"Epsilon rate * Gamma rate = {gammaRateDecimal * epsilonRateDecimal}");
 Console.WriteLine("Where both rates are in decimal.");
+
+inputFile.Close();

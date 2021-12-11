@@ -40,3 +40,5 @@ Console.WriteLine($"Final horizontal movement: {horizontalMovement}");
 Console.WriteLine($"Final depth: {depth}\n");
 
 Console.WriteLine($"horizontalMovement * depth = {horizontalMovement * depth}");
+
+inputFile.Close();
