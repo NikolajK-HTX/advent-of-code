@@ -7,6 +7,7 @@ string[] inputText = inputFile.ReadToEnd().Split('\n');
 
 int horizontalMovement = 0;
 int depth = 0;
+int aim = 0;
 
 foreach (string entireCommand in inputText)
 {
@@ -14,7 +15,7 @@ foreach (string entireCommand in inputText)
     {
         continue;
     }
-    
+
     string[] commandArray = entireCommand.Split(' ');
 
     string command = commandArray[0];
@@ -23,14 +24,15 @@ foreach (string entireCommand in inputText)
     if (command.ToLower() == "forward")
     {
         horizontalMovement += moves;
+        depth += aim * moves;
     }
     if (command.ToLower() == "up")
     {
-        depth -= moves;
+        aim -= moves;
     }
     if (command.ToLower() == "down")
     {
-        depth += moves;
+        aim += moves;
     }
 }
 
