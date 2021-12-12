@@ -1,58 +1,49 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿Console.WriteLine("Hello, World!");
 
-StreamReader inputFile = File.OpenText("input.txt");
+string inputPath = "input.txt";
+StreamReader inputFile = File.OpenText(inputPath);
+int[] inputArray = new int[File.ReadLines(inputPath).Count()];
+int lengthOfLine = 0;
 
-string[] inputArray = inputFile.ReadToEnd().Split('\n');
+for (int i = 0; i < inputArray.Length; i++)
+{
+    string? input = inputFile.ReadLine();
+    if (i == 0 && input != null)
+    {
+        lengthOfLine = input.Length;
+    }
+    inputArray[i] = Convert.ToInt32(input, 2);
+}
 
-List<char> gammaRate = new List<char>();
-List<char> epsilonRate = new List<char>();
+inputFile.Close();
 
-for (int i = 0; i < inputArray[0].Length; i++)
+int gammaRate = 0;
+int epsilonRate = 0;
+
+for (int pos = lengthOfLine-1; pos >= 0; pos--)
 {
     int ones = 0;
-    int zeroes = 0;
 
     for (int j = 0; j < inputArray.Length; j++)
     {
-        string inputText = inputArray[j];
-        if (inputText.Length == 0)
-        {
-            continue;
-        }
-        char inputChar = inputText[i];
-        if (inputChar == '1')
+        int currentInput = inputArray[j];
+        if ((currentInput & (int)Math.Pow(2, pos)) == (int)Math.Pow(2, pos))
         {
             ones++;
         }
-        else if (inputChar == '0')
-        {
-            zeroes++;
-        }
-        else
-        {
-            throw new Exception();
-        }
     }
-    if (ones > zeroes)
+    if (ones >= inputArray.Length/2)
     {
-        gammaRate.Add('1');
-        epsilonRate.Add('0');
+        gammaRate = gammaRate | (int)Math.Pow(2, pos);
     }
     else
     {
-        gammaRate.Add('0');
-        epsilonRate.Add('1');
+        epsilonRate = epsilonRate | (int)Math.Pow(2, pos);
     }
 
 }
 
-int gammaRateDecimal = Convert.ToInt32(String.Join(null, gammaRate), 2);
-int epsilonRateDecimal = Convert.ToInt32(String.Join(null, epsilonRate), 2);
-
-Console.WriteLine($"Gamma rate in decimal is {gammaRateDecimal}.");
-Console.WriteLine($"Epsilon rate in decimal is {epsilonRateDecimal}.\n");
-Console.WriteLine($"Epsilon rate * Gamma rate = {gammaRateDecimal * epsilonRateDecimal}");
+Console.WriteLine($"Gamma rate in decimal is {gammaRate}.");
+Console.WriteLine($"Epsilon rate in decimal is {epsilonRate}.\n");
+Console.WriteLine($"Epsilon rate * Gamma rate = {gammaRate * epsilonRate}");
 Console.WriteLine("Where both rates are in decimal.");
-
-inputFile.Close();
