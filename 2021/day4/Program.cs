@@ -1,8 +1,11 @@
-﻿void checkNumbers(int[] chosenNumbers, List<int[][]> fields, List<int[][]> markedFields, int boardSize)
+﻿void checkNumbers(int[] chosenNumbers, List<int[][]> fields, List<int[][]> markedFields, int boardSize, ref int boardsThatHaveWon)
 {
+    int numberOfBoards = fields.Count;
+
     for (int i = 0; i < chosenNumbers.Length; i++)
     {
         int chosenNumber = chosenNumbers[i];
+        List<int> fieldsToRemove = new List<int>();
         for (int j = 0; j < fields.Count; j++)
         {
             int[][] board = fields[j];
@@ -19,9 +22,22 @@
             int won = winningBoard(board, markedFields[j], boardSize);
             if (won > 0)
             {
-                Console.WriteLine($"Bingo! {won*chosenNumber}");
-                return;
+                boardsThatHaveWon++;
+                fieldsToRemove.Add(j);
+                if (boardsThatHaveWon == numberOfBoards)
+                {
+                    Console.WriteLine($"Bingo! {won * chosenNumber}");
+                    return;
+                }
             }
+        }
+        fieldsToRemove.Sort();
+        fieldsToRemove.Reverse();
+
+        foreach (int index in fieldsToRemove)
+        {
+            fields.RemoveAt(index);
+            markedFields.RemoveAt(index);
         }
     }
 }
@@ -80,6 +96,7 @@ int arrayPos = 0;
 fields.Add(new int[boardSize][]);
 markedFields.Add(new int[boardSize][]);
 
+
 for (int i = 2; i < inputArray.Length; i++)
 {
     if (inputArray[i] == "")
@@ -101,7 +118,9 @@ for (int i = 2; i < inputArray.Length; i++)
     Array.Fill<int>(markedFields[arrayPos][((i - 2) % boardSize)], (int)0);
 }
 
+int boardsThatHaveWon = 0;
+
 // play bingo
-checkNumbers(chosenNumbers, fields, markedFields, boardSize);
+checkNumbers(chosenNumbers, fields, markedFields, boardSize, ref boardsThatHaveWon);
 
 Console.WriteLine("The end :-)");
