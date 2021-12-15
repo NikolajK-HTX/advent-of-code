@@ -1,4 +1,4 @@
-﻿Console.WriteLine("Day 6!");
+﻿Console.WriteLine("Day 6 - Part 1!");
 
 int days = 80;
 
