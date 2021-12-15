@@ -39,6 +39,12 @@ for (int i = 0; i < inputArrayString.Length; i++)
     }
     else // diagonal line
     {
+        // This now contains the solution to part two.
+        // But if one wants the answer to part one, then
+        // all you have to do is remove everything but 
+        // "continue;" in this else statement.
+        // Because in part one you just had to look
+        // away from diagonal lines.
         int[] point;
         int[] temp;
         if (from[0] > to[0])
