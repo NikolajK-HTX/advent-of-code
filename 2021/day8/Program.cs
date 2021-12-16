@@ -23,21 +23,31 @@ foreach (var line in inputArray)
     string[] digitsArray = lineArray[0].Split(' ', StringSplitOptions.RemoveEmptyEntries);
     string[] outputArray = lineArray[1].Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
+    string[] decodingArray = digitsArray.Concat(outputArray).ToArray();
+
     // easy digits
-    foreach (var output in outputArray)
+    foreach (var input in decodingArray)
     {
-        if(numberLength[output.Length].Length == 1)
+        if(numberLength[input.Length].Length == 1)
         {
-            dictDigits[numberLength[output.Length][0]] = output;
+            var inputOrdered = String.Concat(input.OrderBy(x => x));
+            dictDigits[numberLength[input.Length][0]] = inputOrdered;
         }
     }
 
-    foreach (var output in outputArray)
+    foreach (var input in decodingArray)
     {
-        
+    var inputOrdered = String.Concat(input.OrderBy(x => x));
+        if(inputOrdered.Length == 5)
+        {
+            // then it is number three
+            if (inputOrdered.Contains(dictDigits[1]))
+            {
+                dictDigits[3] = inputOrdered;
+            }
+        }
     }
 }
-
 
 Console.WriteLine($"The answer is {sum}");
 Console.WriteLine("The end.");
