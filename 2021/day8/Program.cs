@@ -40,7 +40,11 @@ foreach (var line in inputArray)
     var inputOrdered = String.Concat(input.OrderBy(x => x));
         if(inputOrdered.Length == 5)
         {
-            // then it is number three
+            // if the length of the word is 5
+            // then it could be 2, 3 or 5
+
+            // however if it shares the letters
+            // from digit 1, then it can only be 3
             if (inputOrdered.Contains(dictDigits[1]))
             {
                 dictDigits[3] = inputOrdered;
